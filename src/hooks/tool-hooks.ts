@@ -63,7 +63,7 @@ export async function triggerPreToolUseHooks(
             result.blocked = true;
             result.reason = (hookSpecific?.permissionDecisionReason ??
               jsonOutput.permissionDecisionReason) as string | undefined;
-            result.reason = result.reason ?? "Blocked by hook";
+            result.reason ??= "Blocked by hook";
             notify?.(`PreToolUse 拒绝: ${result.reason}`, "warning");
             return result;
           }
