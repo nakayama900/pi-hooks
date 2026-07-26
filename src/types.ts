@@ -47,6 +47,16 @@ export type SettingsFile = {
   hooks?: HooksConfig;
 };
 
+// ============================================================================
+// Module Augmentation for @earendil-works/pi-coding-agent
+// ============================================================================
+
+declare module "@earendil-works/pi-coding-agent" {
+  interface Settings {
+    hooks?: HooksConfig;
+  }
+}
+
 export type HookEventName =
   | "SessionStart"
   | "SessionEnd"
