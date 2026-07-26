@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { HookEventName, HookGroup, HooksConfig, SettingsFile } from "./types";
 
 // ============================================================================
@@ -8,9 +9,13 @@ import type { HookEventName, HookGroup, HooksConfig, SettingsFile } from "./type
 // ============================================================================
 
 export function getGlobalSettingsPath(): string {
-  const home = os.homedir();
-  const ompPath = path.join(home, ".omp", "agent", "settings.json");
-  return existsSync(ompPath) ? ompPath : path.join(home, ".pi", "agent", "settings.json");
+  try {
+    return path.join(getAgentDir(), "settings.json");
+  } catch {
+    const home = os.homedir();
+    const ompPath = path.join(home, ".omp", "agent", "settings.json");
+    return existsSync(ompPath) ? ompPath : path.join(home, ".pi", "agent", "settings.json");
+  }
 }
 
 export function getProjectSettingsPath(cwd: string): string {
